@@ -1,0 +1,145 @@
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  border-right: 0.5px solid var(--color-border);
+  background: var(--color-surface);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.routeSection {
+  padding: 12px 10px 8px;
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.sceneSection {
+  flex: 1;
+  padding: 4px 0;
+}
+
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  padding: 10px 12px 5px;
+}
+
+.routeList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.routeBtn {
+  width: 100%;
+  padding: 6px 10px;
+  text-align: left;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  background: transparent;
+  border: 0.5px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: all 0.12s;
+}
+
+.routeBtn:hover {
+  background: var(--color-hover);
+}
+
+.routeBtn.active {
+  background: var(--color-green-light);
+  color: var(--color-green);
+  border-color: var(--color-green-border);
+  font-weight: 500;
+}
+
+.sceneItem {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  text-align: left;
+  transition: all 0.1s;
+}
+
+.sceneItem:hover {
+  background: var(--color-hover);
+}
+
+.sceneItem.activeScene {
+  background: var(--color-green-light);
+  border-left-color: var(--color-green);
+}
+
+.sceneIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: var(--color-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.visitedIcon {
+  background: var(--color-green-light);
+}
+
+.sceneInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.sceneName {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sceneTag {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin-top: 1px;
+}
+
+.visitedDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-green);
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+
+  .mobileSidebar {
+    display: flex;
+    width: 100%;
+    border-right: none;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .mobileSidebar .sceneSection {
+    padding-bottom: 24px;
+  }
+}

@@ -1,0 +1,33 @@
+INSTRUCCIONES - Carpeta de imagenes 360
+=======================================
+
+Usa nombres normalizados:
+- minusculas
+- guion bajo
+- sin espacios
+- sin acentos ni caracteres especiales
+
+Las imagenes usadas actualmente por el tour son:
+
+  patio_ninos2-baja.jpg
+  patio_sillas-baja.jpg
+  piscina_adultos1-baja.jpg
+  pasillo_d3.jpg
+  d3_balcon.jpg
+  bano2_d3.jpg
+
+Archivos adicionales ya normalizados en esta carpeta:
+
+  sala_de_usos_multiples-baja.jpg
+  sala_fam_d3.jpg
+  sala_proyecciones-baja.jpg
+  sky_3-baja.jpg
+  squash2-baja.jpg
+  terraza_d3.jpg
+  vestibulo_d3.jpg
+
+NOTA:
+Esta carpeta vive en /public/, asi que Vite sirve las imagenes
+directamente desde URLs como:
+
+  /360/patio_ninos2-baja.jpg

@@ -1,0 +1,100 @@
+/* ============================================
+   app.css — Variables globales y reset base
+   Tour Verde Virtual
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ---- Variables de diseño ---- */
+:root {
+  --color-surface: #ffffff;
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-hover: rgba(0, 0, 0, 0.04);
+  --color-text-primary: #111;
+  --color-text-secondary: #555;
+  --color-text-muted: #999;
+  --bg-page: #f5f4f0;
+
+  /* Verde principal */
+  --color-green: #0F6E56;
+  --color-green-border: #5DCAA5;
+  --color-green-light: #E1F5EE;
+}
+
+/* Dark mode automático */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-surface: #18191a;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-hover: rgba(255, 255, 255, 0.05);
+    --color-text-primary: #f0f0f0;
+    --color-text-secondary: #aaa;
+    --color-text-muted: #666;
+    --bg-page: #111;
+
+    --color-green: #5DCAA5;
+    --color-green-border: #1D9E75;
+    --color-green-light: rgba(29, 158, 117, 0.15);
+  }
+}
+
+/* ---- Reset ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background: var(--bg-page);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ---- Pannellum overrides ---- */
+.pnlm-container {
+  background: #111 !important;
+}
+
+.pnlm-load-button {
+  background: rgba(29, 158, 117, 0.9) !important;
+  border-radius: 8px !important;
+}
+
+.pnlm-load-button p {
+  color: #fff !important;
+  font-family: 'DM Sans', sans-serif !important;
+}
+
+.pnlm-compass {
+  top: 14px !important;
+  right: 14px !important;
+  bottom: auto !important;
+}
+
+/* Scrollbar sutil en sidebar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 2px;
+}

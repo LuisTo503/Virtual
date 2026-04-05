@@ -1,0 +1,169 @@
+.minimap {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 10;
+  width: min(320px, calc(100vw - 28px));
+  background: rgba(7, 15, 12, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  padding: 12px;
+}
+
+.collapsed {
+  width: auto;
+  min-width: 0;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.52);
+  margin: 0;
+}
+
+.toggleBtn {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.mapWrap {
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+}
+
+.mapSvg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mapShell {
+  fill: rgba(255, 255, 255, 0.04);
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 0.8;
+}
+
+.zoneCommon,
+.zoneSuite,
+.zoneAmenity {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+  opacity: 0.58;
+}
+
+.zoneCommon {
+  stroke: rgba(29, 158, 117, 0.25);
+}
+
+.zoneSuite {
+  stroke: rgba(125, 180, 255, 0.2);
+}
+
+.zoneAmenity {
+  stroke: rgba(255, 196, 86, 0.22);
+}
+
+.routeLine {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.8;
+  stroke-dasharray: 3 3;
+  opacity: 0.72;
+}
+
+.mapNode {
+  cursor: pointer;
+}
+
+.nodeCircle {
+  fill: rgba(255, 255, 255, 0.12);
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 0.9;
+}
+
+.nodeCircle.active {
+  fill: #1d9e75;
+  stroke: #d8fff1;
+}
+
+.nodeCircle.visited {
+  fill: rgba(93, 202, 165, 0.54);
+}
+
+.nodeText {
+  fill: #fff;
+  font-size: 2.4px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.legend {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+}
+
+.legendItem {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 900px) {
+  .minimap {
+    left: auto;
+    right: 12px;
+    bottom: 12px;
+    width: min(180px, 25vw);
+    max-width: 25vw;
+    min-width: 120px;
+    padding: 8px;
+  }
+
+  .topRow {
+    margin-bottom: 0;
+    gap: 6px;
+  }
+
+  .title {
+    font-size: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .toggleBtn {
+    padding: 4px 7px;
+    font-size: 9px;
+    max-width: 58px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .legend {
+    gap: 2px;
+    margin-top: 6px;
+  }
+
+  .legendItem {
+    font-size: 9px;
+  }
+}

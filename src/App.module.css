@@ -1,0 +1,236 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg-page);
+}
+
+.topbar {
+  height: 52px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: var(--color-surface);
+  border-bottom: 0.5px solid var(--color-border);
+}
+
+.topbarBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  background: #1D9E75;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .03em;
+}
+
+.brandName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.brandSub {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: -1px;
+}
+
+.topbarCenter {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.routeLabel {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  background: var(--color-hover);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 0.5px solid var(--color-border);
+}
+
+.mobileMenuBtn {
+  display: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 0.5px solid var(--color-border);
+  background: var(--color-hover);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.viewerArea {
+  display: flex;
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.mobileMenuOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.42);
+  z-index: 35;
+  display: none;
+}
+
+.mobileMenuDrawer {
+  width: min(340px, 86vw);
+  height: 100%;
+  background: var(--color-surface);
+  border-right: 0.5px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mobileMenuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px 14px 10px;
+  border-bottom: 0.5px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.mobileMenuTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.mobileMenuClose {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 0.5px solid var(--color-border);
+  background: var(--color-hover);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.bottombar {
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--color-surface);
+  border-top: 0.5px solid var(--color-border);
+  gap: 14px;
+}
+
+.progressWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.progressLabel {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.progressBar {
+  flex: 1;
+  height: 4px;
+  background: var(--color-hover);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #1D9E75;
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressPct {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  min-width: 28px;
+  text-align: right;
+}
+
+.bottomActions {
+  display: flex;
+  gap: 8px;
+}
+
+.infoBtn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 0.5px solid var(--color-border);
+  background: var(--color-hover);
+  color: var(--color-text-secondary);
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+
+.infoBtn:hover {
+  border-color: #1D9E75;
+  color: #1D9E75;
+}
+
+.infoBtnActive {
+  background: var(--color-green-light);
+  color: var(--color-green);
+  border-color: var(--color-green-border);
+}
+
+@media (max-width: 900px) {
+  .topbar {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .topbarCenter {
+    justify-content: flex-end;
+  }
+
+  .routeLabel {
+    display: none;
+  }
+
+  .mobileMenuBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .mobileMenuOverlay {
+    display: block;
+  }
+}

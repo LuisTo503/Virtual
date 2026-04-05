@@ -1,0 +1,397 @@
+.panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 18, 14, 0.94);
+  backdrop-filter: blur(12px);
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  max-height: 74%;
+  overflow-y: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.panel.open {
+  transform: translateY(0);
+}
+
+.header,
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  background: rgba(10, 18, 14, 0.96);
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.headerIcon {
+  font-size: 18px;
+}
+
+.headerTitle,
+.modalTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.closeBtn,
+.audioBtn,
+.audioBtnAlt,
+.resourceCard,
+.opt {
+  font-family: inherit;
+}
+
+.closeBtn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 999px;
+}
+
+.body {
+  padding: 18px;
+  display: grid;
+  gap: 18px;
+}
+
+.description,
+.audioText,
+.resourceDescription,
+.modalBody p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.audioBox,
+.quizBox,
+.resourceCard,
+.featuredBox {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+}
+
+.audioBox {
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.featuredBox {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.audioTitle,
+.sectionTitle,
+.resourceTitle,
+.quizQuestion {
+  color: #fff;
+}
+
+.audioTitle,
+.sectionTitle {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.audioActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.audioBtn,
+.audioBtnAlt {
+  padding: 9px 14px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.audioBtn {
+  background: #1d9e75;
+  color: #fff;
+}
+
+.audioBtnAlt {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.audioBtn:disabled,
+.audioBtnAlt:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.quizGrid,
+.resourceGrid {
+  display: grid;
+  gap: 12px;
+}
+
+.quizGrid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.resourceGrid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.quizBox {
+  padding: 14px;
+}
+
+.quizLabel,
+.resourceType,
+.modalType {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #7ce0bb;
+}
+
+.quizQuestion {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 8px 0 12px;
+  line-height: 1.5;
+}
+
+.optList {
+  display: grid;
+  gap: 8px;
+}
+
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.optLetter {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.correct {
+  background: rgba(29, 158, 117, 0.22);
+  border-color: rgba(29, 158, 117, 0.62);
+}
+
+.wrong {
+  background: rgba(216, 90, 48, 0.22);
+  border-color: rgba(216, 90, 48, 0.52);
+}
+
+.dimmed {
+  opacity: 0.45;
+}
+
+.feedback {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.feedbackCorrect {
+  background: rgba(29, 158, 117, 0.18);
+  color: #9fe1cb;
+}
+
+.feedbackWrong {
+  background: rgba(216, 90, 48, 0.18);
+  color: #f0a28b;
+}
+
+.dragInstructions {
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.74);
+  margin-bottom: 10px;
+}
+
+.dragPool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.dragChip {
+  padding: 9px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 12px;
+  cursor: grab;
+}
+
+.dragTargets {
+  display: grid;
+  gap: 10px;
+}
+
+.dropZone {
+  min-height: 72px;
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 12px;
+  display: grid;
+  gap: 6px;
+}
+
+.dropZoneCorrect {
+  border-color: rgba(29, 158, 117, 0.72);
+  background: rgba(29, 158, 117, 0.14);
+}
+
+.dropZoneWrong {
+  border-color: rgba(216, 90, 48, 0.58);
+  background: rgba(216, 90, 48, 0.12);
+}
+
+.dropLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7ce0bb;
+}
+
+.dropValue {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.resourceCard {
+  padding: 14px;
+  text-align: left;
+  cursor: pointer;
+  display: grid;
+  gap: 8px;
+}
+
+.resourceTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 40;
+}
+
+.modalCard {
+  width: min(920px, 100%);
+  max-height: min(86vh, 900px);
+  overflow: auto;
+  border-radius: 20px;
+  background: #0e1713;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px;
+  display: grid;
+  gap: 14px;
+}
+
+.modalBody {
+  padding: 4px 2px 2px;
+}
+
+.embedWrap {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 420px;
+}
+
+.embedFrame {
+  width: 100%;
+  min-height: 420px;
+  border: 0;
+  background: #fff;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    max-height: 80%;
+  }
+
+  .body,
+  .header,
+  .modalCard {
+    padding: 14px;
+  }
+
+  .quizGrid,
+  .resourceGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featuredBox {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .modalBackdrop {
+    padding: 10px;
+  }
+
+  .embedWrap,
+  .embedFrame {
+    min-height: 340px;
+  }
+}
