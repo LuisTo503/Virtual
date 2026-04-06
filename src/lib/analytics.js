@@ -13,6 +13,7 @@ const getEnv = () => ({
   posthogKey: import.meta.env.VITE_POSTHOG_KEY,
   posthogHost: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
   gtmId: import.meta.env.VITE_GTM_ID,
+  ga4MeasurementId: import.meta.env.VITE_GA4_MEASUREMENT_ID,
 })
 
 const ensureDataLayer = () => {
@@ -22,6 +23,11 @@ const ensureDataLayer = () => {
 
 const injectGtm = (gtmId) => {
   if (!gtmId || document.getElementById('gtm-script')) return
+
+  window.dataLayer.push({
+    'gtm.start': Date.now(),
+    event: 'gtm.js',
+  })
 
   const script = document.createElement('script')
   script.id = 'gtm-script'
@@ -33,11 +39,15 @@ const injectGtm = (gtmId) => {
 export const initAnalytics = () => {
   if (analyticsReady || typeof window === 'undefined') return
 
-  const { posthogKey, posthogHost, gtmId } = getEnv()
+  const { posthogKey, posthogHost, gtmId, ga4MeasurementId } = getEnv()
   ensureDataLayer()
 
   if (gtmId) {
-    window.dataLayer.push({ event: 'gtm_init', gtmId })
+    window.dataLayer.push({
+      event: 'gtm_init',
+      gtmId,
+      ga4_measurement_id: ga4MeasurementId,
+    })
     injectGtm(gtmId)
   }
 
@@ -52,6 +62,12 @@ export const initAnalytics = () => {
   }
 
   analyticsReady = true
+
+  trackEvent('analytics_ready', {
+    gtm_enabled: Boolean(gtmId),
+    ga4_enabled: Boolean(ga4MeasurementId),
+    posthog_enabled: Boolean(posthogKey),
+  })
 }
 
 export const trackEvent = (eventName, payload = {}) => {
