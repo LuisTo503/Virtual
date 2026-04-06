@@ -1,5 +1,6 @@
 import { jsPDF } from 'jspdf'
 import { toJpeg, toPng } from 'html-to-image'
+import { buildConsolidatedCsv } from '../utils/export-builders.js'
 
 function sanitizeFilenamePart(value) {
   return String(value || 'reporte')
@@ -26,90 +27,28 @@ function downloadTextFile(content, filename, mimeType) {
   window.setTimeout(() => URL.revokeObjectURL(url), 0)
 }
 
-function csvEscape(value) {
-  const text = value == null ? '' : String(value)
-  if (/[",\n]/.test(text)) {
-    return `"${text.replace(/"/g, '""')}"`
-  }
-  return text
-}
-
-function buildSectionRows(sectionName, rows) {
-  return rows.map((row) => ({
-    section: sectionName,
-    ...row,
-  }))
-}
-
-function buildConsolidatedRows(filters, bundle) {
-  const summaryRows = buildSectionRows('resumen_kpi', bundle.overviewMetrics.map((item) => ({
-    label: item.label,
-    value: item.value,
-    delta: item.delta,
-  })))
-
-  const dailyRows = buildSectionRows('sesiones_diarias', bundle.sessionsDaily.map((item) => ({
-    label: item.day,
-    value: item.sessions,
-    extra: item.users,
-  })))
-
-  const sceneRows = buildSectionRows('top_escenas', bundle.topScenes.map((item) => ({
-    label: item.scene,
-    value: item.views,
-  })))
-
-  const routeRows = buildSectionRows('top_rutas', bundle.topRoutes.map((item) => ({
-    label: item.route,
-    value: item.sessions,
-  })))
-
-  const quizRows = buildSectionRows('precision_quiz', bundle.quizAccuracy.map((item) => ({
-    label: item.label,
-    value: item.accuracy,
-  })))
-
-  const trafficRows = buildSectionRows('canales_trafico', bundle.trafficChannels.map((item) => ({
-    label: item.channel,
-    value: item.sessions,
-  })))
-
-  const sessionRows = buildSectionRows('sesiones_detalle', bundle.sessionsTableRows.map((item) => ({
-    label: item.id,
-    value: item.views,
-    extra: item.interactions,
-    device: item.device,
-    route: item.route,
-    scene: item.entry,
-    timestamp: item.lastActivity,
-  })))
-
-  const filterRows = buildSectionRows('filtros_aplicados', Object.entries(filters).map(([key, value]) => ({
-    label: key,
-    value,
-  })))
-
-  return [
-    ...filterRows,
-    ...summaryRows,
-    ...dailyRows,
-    ...sceneRows,
-    ...routeRows,
-    ...quizRows,
-    ...trafficRows,
-    ...sessionRows,
-  ]
-}
-
 export function exportConsolidatedCsv({ filters, bundle }) {
-  const rows = buildConsolidatedRows(filters, bundle)
-  const headers = ['section', 'label', 'value', 'delta', 'extra', 'device', 'route', 'scene', 'timestamp']
+  const csv = buildConsolidatedCsv(filters, bundle)
+  const suffix = `${sanitizeFilenamePart(filters.dateFrom)}_${sanitizeFilenamePart(filters.dateTo)}`
+  downloadTextFile(csv, `tour-verde-dashboard-${suffix}.csv`, 'text/csv;charset=utf-8;')
+}
 
-  const csv = [
-    headers.join(','),
-    ...rows.map((row) => headers.map((header) => csvEscape(row[header])).join(',')),
-  ].join('\n')
+export async function exportConsolidatedCsvFromBackend(filters) {
+  const params = new URLSearchParams()
 
+  Object.entries(filters || {}).forEach(([key, value]) => {
+    if (value != null && value !== '') {
+      params.set(key, value)
+    }
+  })
+
+  const response = await fetch(`/api/admin/export-csv?${params.toString()}`)
+
+  if (!response.ok) {
+    throw new Error('No se pudo generar el CSV desde backend')
+  }
+
+  const csv = await response.text()
   const suffix = `${sanitizeFilenamePart(filters.dateFrom)}_${sanitizeFilenamePart(filters.dateTo)}`
   downloadTextFile(csv, `tour-verde-dashboard-${suffix}.csv`, 'text/csv;charset=utf-8;')
 }
@@ -182,6 +121,10 @@ export function exportGeneralReportPdf({ filters, bundle }) {
   pdf.setFontSize(20)
   pdf.setTextColor(23, 33, 27)
   pdf.text('Reporte general del dashboard admin', 40, 42)
+
+  pdf.setFontSize(11)
+  pdf.setTextColor(15, 110, 86)
+  pdf.text('Tour Verde Virtual', 40, 24)
 
   pdf.setFontSize(11)
   pdf.setTextColor(70, 80, 74)

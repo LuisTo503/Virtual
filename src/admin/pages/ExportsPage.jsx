@@ -9,6 +9,7 @@ import { useAdminFilters } from '../hooks/useAdminFilters.jsx'
 import { getExportBundle } from '../services/admin-api.js'
 import {
   exportConsolidatedCsv,
+  exportConsolidatedCsvFromBackend,
   exportElementAsJpg,
   exportElementAsPdf,
   exportElementAsPng,
@@ -67,6 +68,14 @@ export default function ExportsPage() {
 
   const fileSuffix = `${filters.dateFrom}_${filters.dateTo}`
 
+  const handleCsvExport = async () => {
+    try {
+      await exportConsolidatedCsvFromBackend(filters)
+    } catch {
+      exportConsolidatedCsv({ filters, bundle })
+    }
+  }
+
   return (
     <div className="admin-page">
       <section className="admin-intro-card">
@@ -79,7 +88,7 @@ export default function ExportsPage() {
 
       <section className="admin-export-toolbar">
         <Button
-          onClick={() => exportConsolidatedCsv({ filters, bundle })}
+          onClick={handleCsvExport}
         >
           <Download size={16} />
           <span>CSV consolidado</span>

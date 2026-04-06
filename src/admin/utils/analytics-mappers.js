@@ -21,6 +21,10 @@ function groupCount(items, keySelector) {
   return map
 }
 
+function roundPct(value, total) {
+  return total ? Math.round((value / total) * 100) : 0
+}
+
 export function mapOverviewFromAnalytics(analytics) {
   const { sessions, sceneViews, hotspotEvents, quizAttempts, interactionEvents } = analytics
 
@@ -107,9 +111,41 @@ export function mapLearningFromAnalytics(analytics) {
     .sort(byCountDesc)
     .slice(0, 6)
 
+  const audioCount = interactionEvents.filter((item) => item.event_name === 'audio_play').length
+  const videoCount = interactionEvents.filter((item) => item.event_name === 'video_open').length
+  const infoCount = interactionEvents.filter((item) => item.event_name === 'info_panel_open').length
+  const correctAnswers = quizAttempts.filter((item) => item.is_correct).length
+
+  const learningMetrics = [
+    { label: 'Intentos de quiz', value: String(quizAttempts.length), delta: `${correctAnswers} correctos`, tone: 'success' },
+    { label: 'Audio', value: String(audioCount), delta: 'reproducciones', tone: 'default' },
+    { label: 'Video', value: String(videoCount), delta: 'aperturas', tone: 'default' },
+    { label: 'Info', value: String(infoCount), delta: 'paneles abiertos', tone: 'default' },
+  ]
+
+  const sceneLearningMap = new Map()
+  quizAttempts.forEach((item) => {
+    const key = item.scene_id || 'sin_escena'
+    const current = sceneLearningMap.get(key) || { scene: key, attempts: 0, correct: 0 }
+    current.attempts += 1
+    if (item.is_correct) current.correct += 1
+    sceneLearningMap.set(key, current)
+  })
+
+  const sceneLearningRows = [...sceneLearningMap.values()]
+    .map((item) => ({
+      scene: item.scene,
+      attempts: item.attempts,
+      correct: item.correct,
+      accuracy: `${roundPct(item.correct, item.attempts)}%`,
+    }))
+    .sort((a, b) => b.attempts - a.attempts)
+
   return {
+    learningMetrics,
     quizAccuracy,
     topScenes,
+    sceneLearningRows,
   }
 }
 
@@ -155,15 +191,51 @@ export function mapSessionsRowsFromAnalytics(analytics) {
 }
 
 export function mapNavigationFromAnalytics(analytics) {
+  const { hotspotEvents } = analytics
+  const overview = mapOverviewFromAnalytics(analytics)
+
+  const topHotspots = [...groupCount(hotspotEvents, (item) => {
+    const scene = item.scene_id || 'sin_escena'
+    const type = item.hotspot_type || 'sin_tipo'
+    const target = item.target_scene_id || 'sin_destino'
+    return `${scene}|${type}|${target}`
+  }).entries()]
+    .map(([composed, clicks]) => {
+      const [scene, type, target] = composed.split('|')
+      return {
+        scene,
+        type,
+        target,
+        clicks,
+        label: `${scene} / ${type} / ${target}`,
+      }
+    })
+    .sort((a, b) => b.clicks - a.clicks)
+    .slice(0, 8)
+
+  const transitions = [...groupCount(
+    hotspotEvents.filter((item) => item.target_scene_id),
+    (item) => `${item.scene_id || 'sin_escena'}|${item.target_scene_id || 'sin_destino'}`,
+  ).entries()]
+    .map(([composed, clicks]) => {
+      const [from, to] = composed.split('|')
+      return { from, to, clicks }
+    })
+    .sort((a, b) => b.clicks - a.clicks)
+    .slice(0, 8)
+
   return {
-    topScenes: mapOverviewFromAnalytics(analytics).topScenes,
-    topRoutes: mapOverviewFromAnalytics(analytics).topRoutes,
+    topScenes: overview.topScenes,
+    topRoutes: overview.topRoutes,
+    topHotspots,
+    transitions,
   }
 }
 
 export function buildExportBundleFromAnalytics(analytics, filters) {
   const overview = mapOverviewFromAnalytics(analytics)
   const learning = mapLearningFromAnalytics(analytics)
+  const navigation = mapNavigationFromAnalytics(analytics)
 
   const trafficChannels = []
   const exportModules = [
@@ -175,7 +247,11 @@ export function buildExportBundleFromAnalytics(analytics, filters) {
     sessionsDaily: overview.sessionsDaily,
     topScenes: overview.topScenes,
     topRoutes: overview.topRoutes,
+    topHotspots: navigation.topHotspots,
+    transitions: navigation.transitions,
+    learningMetrics: learning.learningMetrics,
     quizAccuracy: learning.quizAccuracy,
+    sceneLearningRows: learning.sceneLearningRows,
     sessionsTableRows: mapSessionsRowsFromAnalytics(analytics),
     trafficChannels,
     exportModules,
