@@ -303,6 +303,15 @@ Cache selectivo, lazy loading y limites de almacenamiento.
 - integrar GA4
 - crear dashboard base en Metabase
 
+### Avance actual
+
+- PWA lista
+- Supabase conectado y recibiendo eventos reales
+- despliegue en Vercel activo
+- base de GTM + GA4 integrada en frontend
+- documentacion inicial de Metabase disponible en `docs/metabase-setup.md`
+- consultas iniciales de dashboard disponibles en `docs/metabase-queries.sql`
+
 ## Convencion de Eventos
 
 Se recomienda una sola capa `trackEvent(name, payload)` en frontend.

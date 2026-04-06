@@ -1,10 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import { registerSW } from 'virtual:pwa-register'
 import 'pannellum/build/pannellum.css'
 import 'pannellum/build/pannellum.js'
 import './styles/app.css'
-import App from './App.jsx'
+import AppRouter from './app/AppRouter.jsx'
 import { initAnalytics, trackEvent } from './lib/analytics.js'
 
 initAnalytics()
@@ -31,6 +32,8 @@ window.addEventListener('appinstalled', () => {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   </StrictMode>,
 )
